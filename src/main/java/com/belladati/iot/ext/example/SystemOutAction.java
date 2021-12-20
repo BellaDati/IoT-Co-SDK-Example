@@ -1,13 +1,19 @@
 package com.belladati.iot.ext.example;
 
-import com.belladati.iot.collector.generic.sender.verticle.Sender;
-import com.belladati.iot.collector.generic.sender.verticle.action.Action;
+import com.belladati.iot.collector.common.Field;
+import com.belladati.iot.collector.common.FieldType;
+import com.belladati.iot.collector.sender.Action;
+import com.belladati.iot.collector.sender.Sender;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SystemOutAction implements Action {
 
     private JsonObject config;
+    private int iterator = 0;
 
     @Override
     public String actionId() {
@@ -21,7 +27,7 @@ public class SystemOutAction implements Action {
 
     @Override
     public Future<Void> process(JsonObject row) {
-        System.out.println(config.getString("prefix") + row.encodePrettily());
+        System.out.println((Boolean.parseBoolean(config.getString("counter")) ? ++iterator + ": " : "")+config.getString("prefix") + row.encodePrettily());
         return Future.succeededFuture();
     }
 
@@ -43,5 +49,13 @@ public class SystemOutAction implements Action {
     @Override
     public Future<Void> close() {
         return Future.succeededFuture();
+    }
+
+    @Override
+    public Map<String, Field> configurationFields() {
+        Map<String, Field> f = new HashMap<>();
+        f.put("prefix", new Field("Prefix", FieldType.TEXT));
+        f.put("counter", new Field("Counter", FieldType.BOOLEAN));
+        return f;
     }
 }

@@ -1,7 +1,7 @@
 package com.belladati.iot.ext.example;
 
-import com.belladati.iot.collector.generic.sender.verticle.Sender;
-import com.belladati.iot.collector.generic.sender.verticle.action.Action;
+import com.belladati.iot.collector.sender.Action;
+import com.belladati.iot.collector.sender.Sender;
 import io.vertx.core.Future;
 import io.vertx.core.json.JsonObject;
 import org.slf4j.Logger;
