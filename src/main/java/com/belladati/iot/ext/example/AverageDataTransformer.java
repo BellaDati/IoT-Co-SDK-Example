@@ -1,6 +1,7 @@
 package com.belladati.iot.ext.example;
 
 import com.belladati.iot.collector.sender.DataTransformer;
+import com.belladati.iot.collector.sender.Sender;
 import com.belladati.iot.collector.sender.TransformedData;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
@@ -23,7 +24,7 @@ public class AverageDataTransformer implements DataTransformer {
     }
 
     @Override
-    public void init(JsonObject jsonObject) {
+    public void init(JsonObject jsonObject, Sender sender) {
         fields = new JsonObject(jsonObject.getString("jsonConfig")).getString("fields").split(",");
     }
 
